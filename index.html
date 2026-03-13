@@ -146,7 +146,6 @@ body{
 </head>
 <body>
 <div class="wrap">
-
   <div class="hero">
     <div class="logo-ring">
       <svg viewBox="0 0 24 24"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg>
@@ -154,21 +153,17 @@ body{
     <h1>Tạo link Shopee</h1>
     <p>vanhau.sansaleshopee &nbsp;·&nbsp; Tạo link affiliate nhanh chóng</p>
   </div>
-
   <div class="card">
     <div class="step-label"><span class="step-num">1</span> Dán link sản phẩm</div>
     <div class="input-wrap">
-      <input id="link" type="text" placeholder="https://shopee.vn/product/...">
+      <input id="link" type="text" placeholder="Dán mọi loại link Shopee vào đây...">
       <button class="paste-btn" onclick="doPaste()" title="Dán từ clipboard">📋</button>
     </div>
-
     <button class="go-btn" onclick="convert()">
       <svg viewBox="0 0 24 24"><path d="M13 3L4 14h7v7l9-11h-7z"/></svg>
       Tạo link ngay
     </button>
-
     <div class="err" id="err"></div>
-
     <div class="result-area" id="result-area">
       <div class="divider">Kết quả</div>
       <div class="result-label">Link affiliate của bạn</div>
@@ -177,9 +172,7 @@ body{
         <button class="copy-btn" id="copy-btn" onclick="doCopy()">Copy</button>
       </div>
     </div>
-
     <div class="divider" style="margin-top:24px;"></div>
-
     <div class="guide">
       <div class="guide-title">
         <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
@@ -188,93 +181,69 @@ body{
       <div class="steps-list">
         <div class="step-row">
           <div class="step-icon">1</div>
-          <div class="step-text">Dán link sản phẩm Shopee vào ô trên rồi nhấn <b>Tạo link ngay</b>.</div>
+          <div class="step-text">Dán link Shopee vào ô trên rồi nhấn <b>Tạo link ngay</b>.</div>
         </div>
         <div class="step-row">
           <div class="step-icon">2</div>
-          <div class="step-text">Nhấn <b>Copy</b> để sao chép link affiliate của bạn.</div>
+          <div class="step-text">Hệ thống sẽ <b>tự động copy</b> link affiliate cho bạn.</div>
         </div>
         <div class="step-row">
           <div class="step-icon">3</div>
-          <div class="step-text">Dán link vào bình luận bài đăng Facebook bên dưới.</div>
-        </div>
-        <div class="step-row">
-          <div class="step-icon">4</div>
-          <div class="step-text">Click vào link trong bình luận để mở Shopee — bạn sẽ nhận được mã giảm giá!</div>
+          <div class="step-text">Dán link vào bình luận Facebook để mua sắm nhận hoàn tiền.</div>
         </div>
       </div>
-
-      <a class="fb-btn" href="https://www.facebook.com/groups/1731832854456702/posts/1735957187377602/" target="_blank">
+      <a class="fb-btn" href="https://www.facebook.com/share/p/1AxEg6ocwK/" target="_blank">
         <svg viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
         Đến bài đăng Facebook
       </a>
-
-      <div class="img-wrap">
-        <img src="voucher-facebook.png" alt="Voucher" onerror="this.parentElement.style.display='none'">
-      </div>
     </div>
   </div>
-
   <div class="footer">Chỉ dùng cho mục đích cá nhân · vanhau.sansaleshopee</div>
 </div>
-
 <script>
 var AFF_ID="17306040278";
-
 function extractProduct(link){
   var m=link.match(/product\/(\d+)\/(\d+)/);
   if(m) return "https://shopee.vn/product/"+m[1]+"/"+m[2];
   m=link.match(/[^a-zA-Z]i\.(\d+)\.(\d+)/);
   if(m) return "https://shopee.vn/product/"+m[1]+"/"+m[2];
-  var sid=link.match(/[?&]shopid=(\d+)/);
-  var iid=link.match(/[?&]itemid=(\d+)/);
-  if(sid&&iid) return "https://shopee.vn/product/"+sid[1]+"/"+iid[1];
-  return null;
+  return link;
 }
-
 function showErr(msg){
   var e=document.getElementById("err");
   e.innerText="⚠️ "+msg;e.style.display="block";
   document.getElementById("result-area").style.display="none";
 }
 function hideErr(){document.getElementById("err").style.display="none";}
-
 function convert(){
-  var link=document.getElementById("link").value.trim();
-  if(!link){showErr("Hãy dán link sản phẩm Shopee vào ô trên.");return;}
-  if(link.match(/s\.shopee\.vn/)&&!link.match(/product\/\d+\/\d+/)){
-    showErr("Link rút gọn — hãy mở trên trình duyệt để lấy link đầy đủ, rồi dán lại.");return;
-  }
-  var product=extractProduct(link);
-  if(!product){showErr("Không nhận dạng được link Shopee. Hãy dán link đầy đủ từ trang sản phẩm.");return;}
+  var l=document.getElementById("link").value.trim();
+  if(!l){showErr("Hãy dán link Shopee");return;}
   hideErr();
-  var aff="https://s.shopee.vn/an_redir?origin_link="+encodeURIComponent(product)+"&affiliate_id="+AFF_ID+"&sub_id=githubtool";
-  document.getElementById("result").value=aff;
+  var p=extractProduct(l);
+  var a="https://s.shopee.vn/an_redir?origin_link="+encodeURIComponent(p)+"&affiliate_id="+AFF_ID+"&sub_id=githubtool";
+  document.getElementById("result").value=a;
   document.getElementById("result-area").style.display="block";
-  var b=document.getElementById("copy-btn");b.innerText="Copy";b.classList.remove("done");
-}
-
-function doCopy(){
-  var inp=document.getElementById("result");
-  var b=document.getElementById("copy-btn");
-  inp.select();inp.setSelectionRange(0,9999);
-  navigator.clipboard.writeText(inp.value).then(function(){
-    b.innerText="✓ Đã copy!";b.classList.add("done");
-    setTimeout(function(){b.innerText="Copy";b.classList.remove("done");},2200);
-  }).catch(function(){
-    document.execCommand("copy");
-    b.innerText="✓ Đã copy!";
-    setTimeout(function(){b.innerText="Copy";},2200);
+  navigator.clipboard.writeText(a).then(function(){
+    var b=document.getElementById("copy-btn");
+    b.innerText="✓ Đã tự copy!";b.classList.add("done");
+    setTimeout(function(){b.innerText="Copy";b.classList.remove("done");},2000);
   });
 }
-
+function doCopy(){
+  var i=document.getElementById("result");
+  var b=document.getElementById("copy-btn");
+  i.select();
+  navigator.clipboard.writeText(i.value).then(function(){
+    b.innerText="✓ Đã copy!";b.classList.add("done");
+    setTimeout(function(){b.innerText="Copy";b.classList.remove("done");},2000);
+  });
+}
 async function doPaste(){
   try{
     var t=await navigator.clipboard.readText();
     document.getElementById("link").value=t;hideErr();
-  }catch(e){alert("Không thể dán tự động — hãy dùng Ctrl+V / Cmd+V");}
+  }catch(e){}
 }
-
 document.getElementById("link").addEventListener("keydown",function(e){if(e.key==="Enter")convert();});
 </script>
 </body>
